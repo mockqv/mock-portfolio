@@ -4,54 +4,54 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portfólio Mockqv</title>
+    <title>Mockqv | Desenvolvedor Full-Stack</title>
 
-    <!-- Google Fonts: Poppins & Roboto -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700;800&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
-
-    <!-- Devicon -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.15.1/devicon.min.css">
-
-    <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
-    <!-- CSS link -->
     <link rel="stylesheet" href="css/styles.css">
 </head>
 
 <body>
 
-    <!-- Header -->
     <header class="header">
-        <div class="container">
+        <div class="header-inner">
             <nav class="main-nav">
                 <ul class="nav-list">
                     <li><a href="#about" data-translate="navAbout">Sobre</a></li>
                     <li><a href="#experience" data-translate="navExperience">Experiência</a></li>
                     <li><a href="#projects" data-translate="navProjects">Projetos</a></li>
-                    <li><a href="#tech-stack" data-translate="navSkills">Habilidades</a></li>
+                    <li><a href="#tech-stack" data-translate="navSkills">Stack</a></li>
                 </ul>
             </nav>
             <div class="header-right">
-                <button id="lang-menu-toggle" class="lang-menu-btn"><i class="fas fa-cog"></i></button>
+                <button id="lang-menu-toggle" class="lang-menu-btn" aria-label="Configurações">
+                    <i class="fas fa-cog"></i>
+                </button>
                 <div id="lang-modal" class="language-modal">
-                    <span data-translate="langLabel">Linguagem:</span>
-                    <button class="lang-btn" data-lang="pt-BR"><img src="https://flagcdn.com/br.svg" alt="Bandeira do Brasil" width="30"></button>
-                    <button class="lang-btn" data-lang="en-US"><img src="https://flagcdn.com/us.svg" alt="Bandeira dos EUA" width="30"></button>
+                    <span data-translate="langLabel" class="lang-label">Idioma:</span>
+                    <div class="lang-options">
+                        <button class="lang-btn" data-lang="pt-BR">
+                            <img src="https://flagcdn.com/br.svg" alt="Brasil" width="20"> PT
+                        </button>
+                        <button class="lang-btn" data-lang="en-US">
+                            <img src="https://flagcdn.com/us.svg" alt="USA" width="20"> EN
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
     </header>
 
     <main>
-        <!-- Hero Section -->
         <section id="hero" class="container">
             <div class="hero-content">
+                <span class="greeting">Olá, eu sou</span>
                 <h2 class="hero-logo">Mockqv.</h2>
                 <h1 data-translate="heroTitle">Desenvolvedor Full-Stack</h1>
-                <p class="subtitle" data-translate="heroSubtitle">Transformando ideias em realidade digital com código limpo e design funcional.</p>
+                <p class="subtitle" data-translate="heroSubtitle">Crio soluções digitais escaláveis com foco em performance e experiência do usuário.</p>
                 <div class="social-links">
                     <a href="https://github.com/mockqv" target="_blank" aria-label="GitHub"><i class="fab fa-github"></i></a>
                     <a href="https://www.linkedin.com/in/richardvfsilva/" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
@@ -59,139 +59,144 @@
             </div>
         </section>
 
-        <!-- About Section -->
         <section id="about" class="container">
             <h2 data-translate="aboutTitle">Sobre Mim</h2>
             <div class="about-content">
                 <div class="about-image">
-                    <img src="assets/me.jpg" alt="Richard Silva">
+                    <img src="assets/me.jpg" alt="Foto de Richard Silva">
                 </div>
                 <div class="about-text">
                     <h3 data-translate="aboutSubtitle">Resumo Profissional</h3>
-                    <p data-translate="aboutText">Atualmente atuo como desenvolvedor autônomo freelancer full-stack, aplicando uma base sólida construída em um colégio técnico renomado localizado em Campinas. Lá, estudei <strong>Algoritmos</strong>, <strong>Estrutura de Dados</strong>, <strong>Lógica</strong>, <strong>IA</strong>, <strong>Engenharia de Software</strong>, <strong>Desenvolvimento Web e Mobile</strong>, <strong>Arquitetura Orientada a Serviços</strong> e <strong>boas práticas</strong>. Sigo aprimorando esses conhecimentos enquanto busco meu diploma de bacharelado em Sistema de Informação.</p>
+                    <p data-translate="aboutText">Atualmente atuo como desenvolvedor full-stack freelancer, aplicando uma base sólida construída em formação técnica de excelência em Campinas. Possuo expertise em <strong>Algoritmos</strong>, <strong>Estrutura de Dados</strong>, <strong>Engenharia de Software</strong> e <strong>Arquitetura Orientada a Serviços</strong>. Estou em constante evolução acadêmica, cursando Bacharelado em Sistemas de Informação.</p>
                 </div>
             </div>
         </section>
 
-        <!-- Experience Section -->
         <section id="experience">
             <div class="container">
-                <h2 data-translate="experienceTitle">Experiência Profissional</h2>
+                <h2 data-translate="experienceTitle">Experiência</h2>
                 <div class="experience-timeline">
                     <div class="timeline-item left">
                         <div class="timeline-content">
-                            <h4 data-translate="job2Title">Desenvolvedor de Software Freelancer | Autônomo</h4>
-                            <p class="job-duration" data-translate="job2Duration">Maio 2025 - Outubro 2025</p>
-                            <ul class="job-list">
-                                <li class="job-description-item" data-translate="job2Desc">
-                                    <i class="fas fa-briefcase"></i> 
-                                    <div class="job-item-content">
-                                        <strong>Sistema para Imobiliária (Full-Stack):</strong> 
-                                        <span class="job-description-text">Desenvolvimento de aplicação web para gerenciamento de imóveis e captação de clientes.</span>
-                                    </div>
-                                </li>
-                            </ul>
-                            <p class="job-tech"><span data-translate="jobTechLabel"><strong>Tecnologias:</strong></span> <span class="tag">React</span> <span class="tag">Flask</span> <span class="tag">PostgreSQL</span></p>
+                            <div class="timeline-header">
+                                <h4 data-translate="job2Title">Desenvolvedor Full-Stack</h4>
+                                <span class="job-type">Freelance</span>
+                            </div>
+                            <p class="job-duration" data-translate="job2Duration">Maio 2025 - Presente</p>
+                            <p class="job-desc" data-translate="job2Desc">
+                                <strong>Sistema Imobiliário:</strong> Desenvolvimento de plataforma web para gestão de propriedades e CRM, implementando dashboards administrativos e integração com APIs externas.
+                            </p>
+                            <div class="tech-badges">
+                                <span>React</span><span>Flask</span><span>PostgreSQL</span>
+                            </div>
                         </div>
                     </div>
                     <div class="timeline-item right">
                         <div class="timeline-content">
-                            <h4 data-translate="job1Title">Desenvolvedor de Software Freelancer | Autônomo</h4>
-                            <p class="job-duration" data-translate="job1Duration">Setembro 2025 - Setembro 2025</p>
-                            <ul class="job-list">
-                                <li class="job-description-item" data-translate="job1Desc">
-                                    <i class="fas fa-briefcase"></i> 
-                                    <div class="job-item-content">
-                                        <strong>Portfólio Profissional (Front-end):</strong> 
-                                        <span class="job-description-text">Criação de um site de portfólio estático e totalmente responsivo.</span>
-                                    </div>
-                                </li>
-                            </ul>
-                            <p class="job-tech"><span data-translate="jobTechLabel"><strong>Tecnologias:</strong></span> <span class="tag">HTML</span> <span class="tag">CSS</span> <span class="tag">TailwindCSS</span> <span class="tag">JavaScript</span></p>
+                            <div class="timeline-header">
+                                <h4 data-translate="job1Title">Desenvolvedor Front-end</h4>
+                                <span class="job-type">FREELANCE</span>
+                            </div>
+                            <p class="job-duration" data-translate="job1Duration">Setembro 2025</p>
+                            <p class="job-desc" data-translate="job1Desc">
+                                <strong>Portfólio Profissional:</strong> Arquitetura e desenvolvimento de interface responsiva de alta performance focada em SEO e acessibilidade.
+                            </p>
+                            <div class="tech-badges">
+                                <span>HTML5</span><span>Tailwind</span><span>JavaScript</span>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Projects Section -->
         <section id="projects" class="container">
             <h2 data-translate="projectsTitle">Projetos Pessoais</h2>
             <div class="projects-grid">
-                <!-- Project 1 -->
                 <div class="project-card">
-                    <div class="project-content">
-                        <h3 data-translate="p1Title">TypeScript Bot Discord</h3>
-                        <p data-translate="p1Desc">Um bot do Discord rico em recursos para automação e gestão de comunidades, construído com foco em OOP.</p>
-                        <div class="project-tags">
-                            <span class="tag">TypeScript</span><span class="tag">Discord.JS</span><span class="tag">MongoDB</span><span class="tag">OOP</span>
-                        </div>
-                        <div class="project-links">
-                            <a href="https://github.com/mockqv/TypeScript-Bot-Discord" target="_blank"><i class="fab fa-github"></i> <span data-translate="codeBtn">Código</span></a>
+                    <div class="card-header">
+                        <i class="fas fa-robot project-icon"></i>
+                        <div class="card-links">
+                            <a href="https://github.com/mockqv/TypeScript-Bot-Discord" target="_blank" title="Ver Código"><i class="fab fa-github"></i></a>
                         </div>
                     </div>
-                </div>
-                <!-- Project 2 -->
-                <div class="project-card">
-                    <div class="project-content">
-                        <h3 data-translate="p2Title">LinkSnap</h3>
-                        <p data-translate="p2Desc">Uma aplicação web minimalista para encurtar URLs longas, focada na simplicidade e rapidez da experiência do usuário.</p>
-                        <div class="project-tags">
-                            <span class="tag">HTML</span><span class="tag">CSS</span><span class="tag">JavaScript</span><span class="tag">ExpressJS</span>
-                        </div>
-                        <div class="project-links">
-                            <a href="https://github.com/mockqv/LinkSnap" target="_blank"><i class="fab fa-github"></i> <span data-translate="codeBtn">Código</span></a>
-                        </div>
+                    <h3 data-translate="p1Title">TypeScript Bot Discord</h3>
+                    <p data-translate="p1Desc">Automação robusta para comunidades com arquitetura OOP modular e escalável.</p>
+                    <div class="project-tags">
+                        <span>TypeScript</span><span>Discord.js</span><span>MongoDB</span>
                     </div>
                 </div>
-                <!-- MSC Project -->
                 <div class="project-card">
-                    <div class="project-content">
-                        <h3>MSC - My Semantic Commit</h3>
-                        <p>Uma ferramenta CLI altamente personalizada para auxiliar na criação de commits semânticos, desenvolvida com Shell e Python.</p>
-                        <div class="project-tags">
-                            <span class="tag">Shell</span><span class="tag">Python</span><span class="tag">CLI Tool</span>
+                    <div class="card-header">
+                        <i class="fas fa-link project-icon"></i>
+                        <div class="card-links">
+                            <a href="https://github.com/mockqv/LinkSnap" target="_blank" title="Ver Código"><i class="fab fa-github"></i></a>
                         </div>
-                        <div class="project-links">
-                            <a href="https://github.com/mockqv/msc" target="_blank"><i class="fab fa-github"></i> <span data-translate="codeBtn">Código</span></a>
+                    </div>
+                    <h3 data-translate="p2Title">LinkSnap</h3>
+                    <p data-translate="p2Desc">Encurtador de URLs minimalista focado em velocidade e UX simplificada.</p>
+                    <div class="project-tags">
+                        <span>Node.js</span><span>Express</span><span>EJS</span>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="card-header">
+                        <i class="fas fa-terminal project-icon"></i>
+                        <div class="card-links">
+                            <a href="https://github.com/mockqv/msc" target="_blank" title="Ver Código"><i class="fab fa-github"></i></a>
                         </div>
+                    </div>
+                    <h3>MSC - Semantic Commit</h3>
+                    <p>CLI Tool para padronização de commits semânticos, melhorando o fluxo de git.</p>
+                    <div class="project-tags">
+                        <span>Python</span><span>Shell</span><span>CLI</span>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Tech Stack Section -->
-        <section id="tech-stack">
-            <div class="container">
-                <h2 data-translate="skillsTitle">Minhas Habilidades</h2>
-                <div class="skills-grid">
-                    <div class="skill-card"><i class="devicon-javascript-plain"></i><span>JavaScript</span></div>
-                    <div class="skill-card"><i class="devicon-typescript-plain"></i><span>TypeScript</span></div>
-                    <div class="skill-card"><i class="devicon-react-original"></i><span>React</span></div>
-                    <div class="skill-card"><i class="devicon-nextjs-original"></i><span>Next.js</span></div>
-                    <div class="skill-card"><i class="devicon-nodejs-plain"></i><span>Node.js</span></div>
-                    <div class="skill-card"><i class="devicon-python-plain"></i><span>Python</span></div>
-                    <div class="skill-card"><i class="devicon-html5-plain"></i><span>HTML5</span></div>
-                    <div class="skill-card"><i class="devicon-css3-plain"></i><span>CSS3</span></div>
-                    <div class="skill-card"><i class="devicon-tailwindcss-plain"></i><span>Tailwind</span></div>
-                    <div class="skill-card"><i class="devicon-bootstrap-plain"></i><span>Bootstrap</span></div>
-                    <div class="skill-card"><i class="devicon-mongodb-plain"></i><span>MongoDB</span></div>
-                    <div class="skill-card"><i class="devicon-mysql-plain"></i><span>MySQL</span></div>
-                    <div class="skill-card"><i class="devicon-postgresql-plain"></i><span>PostgreSQL</span></div>
-                    <div class="skill-card"><i class="devicon-firebase-plain"></i><span>Firebase</span></div>
-                    <div class="skill-card"><i class="devicon-supabase-plain"></i><span>Supabase</span></div>
-                    <div class="skill-card"><i class="devicon-git-plain"></i><span>Git</span></div>
-                    <div class="skill-card"><i class="devicon-github-original"></i><span>GitHub</span></div>
-                    <div class="skill-card"><i class="devicon-docker-plain"></i><span>Docker</span></div>
-                    <div class="skill-card"><i class="devicon-figma-plain"></i><span>Figma</span></div>
-                    <div class="skill-card"><i class="devicon-bash-plain"></i><span>Bash</span></div>
-                    <div class="skill-card"><i class="devicon-linux-plain"></i><span>Linux</span></div>
+        <section id="tech-stack" class="container">
+            <h2 data-translate="skillsTitle">Stack Tecnológica</h2>
+            
+            <div class="skills-wrapper">
+                <div class="skill-category">
+                    <h3><i class="fas fa-code"></i> Frontend</h3>
+                    <div class="skills-list">
+                        <div class="skill-pill"><i class="devicon-javascript-plain"></i> JavaScript</div>
+                        <div class="skill-pill"><i class="devicon-typescript-plain"></i> TypeScript</div>
+                        <div class="skill-pill"><i class="devicon-react-original"></i> React</div>
+                        <div class="skill-pill"><i class="devicon-nextjs-original"></i> Next.js</div>
+                        <div class="skill-pill"><i class="devicon-tailwindcss-plain"></i> Tailwind</div>
+                        <div class="skill-pill"><i class="devicon-html5-plain"></i> HTML5/CSS3</div>
+                    </div>
+                </div>
+
+                <div class="skill-category">
+                    <h3><i class="fas fa-server"></i> Backend & DB</h3>
+                    <div class="skills-list">
+                        <div class="skill-pill"><i class="devicon-nodejs-plain"></i> Node.js</div>
+                        <div class="skill-pill"><i class="devicon-python-plain"></i> Python</div>
+                        <div class="skill-pill"><i class="devicon-postgresql-plain"></i> PostgreSQL</div>
+                        <div class="skill-pill"><i class="devicon-mongodb-plain"></i> MongoDB</div>
+                        <div class="skill-pill"><i class="devicon-firebase-plain"></i> Firebase</div>
+                        <div class="skill-pill"><i class="devicon-supabase-plain"></i> Supabase</div>
+                    </div>
+                </div>
+
+                <div class="skill-category">
+                    <h3><i class="fas fa-tools"></i> DevOps & Tools</h3>
+                    <div class="skills-list">
+                        <div class="skill-pill"><i class="devicon-docker-plain"></i> Docker</div>
+                        <div class="skill-pill"><i class="devicon-git-plain"></i> Git/GitHub</div>
+                        <div class="skill-pill"><i class="devicon-linux-plain"></i> Linux</div>
+                        <div class="skill-pill"><i class="devicon-figma-plain"></i> Figma</div>
+                        <div class="skill-pill"><i class="devicon-bash-plain"></i> Bash</div>
+                    </div>
                 </div>
             </div>
         </section>
     </main>
 
-    <!-- Footer -->
     <footer>
         <div class="container">
             <p>&copy; 2025 Mockqv.</p>
@@ -199,6 +204,5 @@
     </footer>
 
     <script src="js/script.js"></script>
-
 </body>
 </html>
