@@ -1,38 +1,4 @@
-// --- Setup ---
-tailwind.config = {
-    theme: {
-        extend: {
-            fontFamily: {
-                sans: ['Inter', 'sans-serif'],
-            },
-            animation: {
-                'fade-in-up': 'fadeInUp 0.8s ease-out',
-                'grid-flow': 'gridFlow 20s linear infinite',
-            },
-            keyframes: {
-                fadeInUp: {
-                    '0%': {
-                        opacity: '0',
-                        transform: 'translateY(20px)'
-                    },
-                    '100%': {
-                        opacity: '1',
-                        transform: 'translateY(0)'
-                    },
-                },
-                gridFlow: {
-                    '0%': {
-                        backgroundPosition: '0 0'
-                    },
-                    '100%': {
-                        backgroundPosition: '50px 50px'
-                    },
-                }
-            }
-        }
-    }
-}
-
+// Inicializa ícones Lucide
 lucide.createIcons();
 
 // --- Navigation Logic (Smooth Scroll Fix) ---
@@ -43,7 +9,6 @@ document.querySelectorAll('.nav-link').forEach(anchor => {
         if (targetId === '#') return;
         const targetElement = document.querySelector(targetId);
         if (targetElement) {
-            // Offset para navbar flutuante (100px é seguro)
             const headerOffset = 100;
             const elementPosition = targetElement.getBoundingClientRect().top;
             const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
@@ -53,7 +18,6 @@ document.querySelectorAll('.nav-link').forEach(anchor => {
                 behavior: "smooth"
             });
 
-            // Fecha menu mobile
             document.getElementById('mobile-menu').classList.add('hidden');
         }
     });
@@ -96,16 +60,12 @@ const translations = {
         contactTogether: 'juntos?',
         contactText: 'Estou disponível para novos projetos e oportunidades freelance. Se você precisa de uma solução full-stack robusta, me mande uma mensagem.',
         remoteAvailable: 'Disponível para Remoto',
-        formName: 'Seu Nome',
-        formEmail: 'Seu E-mail',
-        formMsg: 'Mensagem',
-        formBtn: 'Enviar Mensagem'
     },
     'en': {
         aboutTitle: 'About',
         navProjects: 'Projects',
         navSkills: 'Stack',
-        navExperience: 'Experiência',
+        navExperience: 'Experience',
         navContact: 'Contact',
         heroGreeting: 'Hi, I am',
         heroSubtitle: 'Building scalable digital solutions with a focus on performance and user experience.',
@@ -136,10 +96,6 @@ const translations = {
         contactTogether: 'together?',
         contactText: 'I am available for new projects and freelance opportunities. If you need a robust full-stack solution, send me a message.',
         remoteAvailable: 'Remote Available',
-        formName: 'Your Name',
-        formEmail: 'Your Email',
-        formMsg: 'Message',
-        formBtn: 'Send Message'
     }
 };
 
@@ -157,7 +113,6 @@ function updateLanguage(lang) {
         }
     });
 
-    // Update Button State
     if (lang === 'pt') {
         flagSpan.textContent = '🇧🇷';
     } else {
@@ -179,32 +134,4 @@ menuBtn.addEventListener('click', () => mobileMenu.classList.remove('hidden'));
 closeMenu.addEventListener('click', () => mobileMenu.classList.add('hidden'));
 document.querySelectorAll('.mobile-link').forEach(link => {
     link.addEventListener('click', () => mobileMenu.classList.add('hidden'));
-});
-
-// --- Form Simulation ---
-const form = document.getElementById('contact-form');
-const submitBtn = document.getElementById('submit-btn');
-const btnText = submitBtn.querySelector('span');
-
-form.addEventListener('submit', (e) => {
-    e.preventDefault();
-    submitBtn.disabled = true;
-    const originalText = btnText.textContent;
-    btnText.textContent = currentLang === 'pt' ? 'Enviando...' : 'Sending...';
-    submitBtn.classList.add('opacity-75');
-
-    setTimeout(() => {
-        btnText.textContent = currentLang === 'pt' ? 'Enviado!' : 'Sent!';
-        submitBtn.classList.remove('bg-indigo-600', 'hover:bg-indigo-700');
-        submitBtn.classList.add('bg-green-600');
-        form.reset();
-        setTimeout(() => {
-            submitBtn.disabled = false;
-            // Re-apply correct text based on current language
-            const t = translations[currentLang];
-            btnText.textContent = t.formBtn;
-            submitBtn.classList.remove('opacity-75', 'bg-green-600');
-            submitBtn.classList.add('bg-indigo-600', 'hover:bg-indigo-700');
-        }, 3000);
-    }, 1500);
 });

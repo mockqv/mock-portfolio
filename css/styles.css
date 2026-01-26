@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+@import url('[https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap](https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap)');
 
 body {
     font-family: 'Inter', sans-serif;
@@ -8,16 +8,13 @@ body {
 ::-webkit-scrollbar {
     width: 8px;
 }
-
 ::-webkit-scrollbar-track {
     background: #0f172a;
 }
-
 ::-webkit-scrollbar-thumb {
     background: #4f46e5;
     border-radius: 4px;
 }
-
 ::-webkit-scrollbar-thumb:hover {
     background: #4338ca;
 }
@@ -36,7 +33,6 @@ body {
     bottom: 0;
     width: 1px;
     background: #1e293b;
-    /* slate-800 */
     transform: translateX(-50%);
 }
 
@@ -46,7 +42,7 @@ body {
     }
 }
 
-/* Ajuste ícones devicon */
+/* Ícones e Badges */
 .devicon-icon {
     font-size: 1.1rem;
     margin-right: 0.5rem;
@@ -82,17 +78,18 @@ body {
     background-color: rgba(99, 102, 241, 0.1);
 }
 
+/* Nav Link Hover Effect */
 .nav-link {
     position: relative;
     transition: all 0.3s ease;
-    padding-inline: 15px; /* Add padding for spacing */
+    padding-inline: 15px;
 }
 
 .nav-link::before {
-    content: '.'; /* Dot before the text */
+    content: '.';
     color: #4f46e5;
     position: absolute;
-    left: 0; /* Position at the beginning of the padding */
+    left: 0;
     top: 50%;
     transform: translateY(-50%);
     opacity: 0;
@@ -100,10 +97,10 @@ body {
 }
 
 .nav-link::after {
-    content: '( )'; /* Parentheses after the text */
+    content: '( )';
     color: #4f46e5;
     position: absolute;
-    right: 0; /* Position at the end of the padding */
+    right: 0;
     top: 50%;
     transform: translateY(-50%);
     opacity: 0;
