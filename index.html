@@ -1,465 +1,683 @@
 <!DOCTYPE html>
 <html lang="pt-BR" class="scroll-smooth">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mockqv | Desenvolvedor Full-Stack</title>
-    
-    <!-- Tailwind CSS via CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    
-    <!-- Lucide Icons -->
-    <script src="https://unpkg.com/lucide@latest"></script>
-    
-    <!-- Devicon -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css">
+<head> 
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Richard Silva — Desenvolvedor Full-Stack</title>
+  <meta name="description" content="Richard Silva — Desenvolvedor Full-Stack. Construo soluções digitais escaláveis com foco em performance e experiência do usuário." />
 
-    <!-- Configuração Tailwind (Mantida no HTML para carregar corretamente com o CDN) -->
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                        mono: ['Fira Code', 'monospace'],
-                    },
-                    animation: {
-                        'fade-in-up': 'fadeInUp 0.8s ease-out forwards',
-                        'grid-flow': 'gridFlow 20s linear infinite',
-                        'float': 'float 6s ease-in-out infinite',
-                    },
-                    keyframes: {
-                        fadeInUp: {
-                            '0%': { opacity: '0', transform: 'translateY(20px)' },
-                            '100%': { opacity: '1', transform: 'translateY(0)' },
-                        },
-                        gridFlow: {
-                            '0%': { backgroundPosition: '0 0' },
-                            '100%': { backgroundPosition: '50px 50px' },
-                        },
-                        float: {
-                            '0%, 100%': { transform: 'translateY(0)' },
-                            '50%': { transform: 'translateY(-10px)' },
-                        }
-                    }
-                }
-            }
-        }
-    </script>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
 
-    <!-- Link para o CSS Externo -->
-    <link rel="stylesheet" href="css/styles.css">
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- Devicon -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css" />
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500;700&display=swap" rel="stylesheet" />
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="css/styles.css" />
+
+  <style>
+    /* nav active state */
+    .nav-links a.active { color: var(--accent); }
+    .nav-links a.active::after { left: 16px; right: 16px; }
+    /* hero grid bg */
+    .hero-grid-bg {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(to right, rgba(168,85,247,0.04) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(168,85,247,0.04) 1px, transparent 1px);
+      background-size: 60px 60px;
+      mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 30%, transparent 100%);
+      pointer-events: none;
+    }
+    /* project card glow on hover */
+    .project-card {
+      background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(168,85,247,0.05) 0%, transparent 60%), var(--bg2);
+    }
+  </style>
 </head>
-<body class="bg-slate-950 text-slate-200 relative overflow-x-hidden">
+<body>
 
-    <!-- Background Animado Global -->
-    <div class="fixed inset-0 z-0 pointer-events-none opacity-40 animate-grid-flow" 
-         style="background-image: linear-gradient(to right, rgba(99, 102, 241, 0.3) 1px, transparent 1px), linear-gradient(to bottom, rgba(99, 102, 241, 0.3) 1px, transparent 1px); background-size: 50px 50px;">
+  <!-- Custom Cursor -->
+  <div id="cursor"></div>
+  <div id="cursor-follower"></div>
+
+  <!-- Particles -->
+  <canvas id="particles-canvas"></canvas>
+
+  <!-- ═══════════════════════════════════ NAVBAR ══ -->
+  <header id="navbar" class="z-content">
+    <a href="#" class="nav-logo">mock<span>.</span>qv</a>
+
+    <ul class="nav-links">
+      <li><a href="#about"      data-t="navAbout">Sobre</a></li>
+      <li><a href="#experience" data-t="navExp">Experiência</a></li>
+      <li><a href="#projects"   data-t="navProjects">Projetos</a></li>
+      <li><a href="#skills"     data-t="navSkills">Stack</a></li>
+      <li><a href="#contact"    data-t="navContact">Contato</a></li>
+    </ul>
+
+    <div class="nav-actions">
+      <button id="lang-toggle" title="Mudar idioma">
+        <span id="current-lang-flag">🇧🇷</span>
+      </button>
+      <button id="menu-btn" aria-label="Abrir menu">
+        <i data-lucide="menu" style="width:20px;height:20px;display:block;"></i>
+      </button>
     </div>
-    
-    <!-- Vignette -->
-    <div class="fixed inset-0 z-0 pointer-events-none bg-[radial-gradient(circle_at_center,transparent_10%,#020617_100%)]"></div>
+  </header>
 
-    <!-- Navbar -->
-    <div class="fixed top-0 left-0 right-0 z-50 flex justify-center pt-4 px-4">
-        <nav id="navbar" class="bg-slate-900/80 backdrop-blur-md px-6 py-3 flex items-center justify-between w-full max-w-2xl transition-all duration-300 rounded-xl shadow-lg border border-slate-800/50">
-            
-            <div class="text-base font-bold bg-gradient-to-r from-indigo-400 to-cyan-400 bg-clip-text text-transparent cursor-pointer hover:opacity-80" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
-                Mockqv.
-            </div>
-            
-            <div class="hidden md:flex items-center text-[11px] uppercase tracking-wide font-semibold text-slate-400">
-                <a href="#about" class="nav-link hover:text-indigo-400 transition-colors cursor-pointer" data-translate="aboutTitle">Sobre</a>
-                <a href="#experience" class="nav-link hover:text-indigo-400 transition-colors cursor-pointer" data-translate="navExperience">Experiência</a>
-                <a href="#projects" class="nav-link hover:text-indigo-400 transition-colors cursor-pointer" data-translate="navProjects">Projetos</a>
-                <a href="#skills" class="nav-link hover:text-indigo-400 transition-colors cursor-pointer" data-translate="navSkills">Stack</a>
-                <a href="#contact" class="nav-link hover:text-indigo-400 transition-colors cursor-pointer" data-translate="navContact">Contato</a>
-            </div>
+  <!-- ═════════════════════════════ MOBILE MENU ══ -->
+  <div id="mobile-menu">
+    <a href="#about"      data-t="navAbout">Sobre</a>
+    <a href="#experience" data-t="navExp">Experiência</a>
+    <a href="#projects"   data-t="navProjects">Projetos</a>
+    <a href="#skills"     data-t="navSkills">Stack</a>
+    <a href="#contact"    data-t="navContact">Contato</a>
+    <button id="close-menu" aria-label="Fechar menu">✕</button>
+  </div>
 
-            <div class="flex items-center gap-3">
-                <button id="lang-toggle" class="flex items-center justify-center hover:scale-110 transition-transform" title="Mudar Idioma">
-                    <span id="current-lang-flag" class="text-lg leading-none filter drop-shadow-md">🇧🇷</span>
-                </button>
+  <!-- ══════════════════════════════════ HERO ══ -->
+  <section id="hero" class="z-content">
+    <div class="hero-grid-bg"></div>
 
-                <button id="menu-btn" class="md:hidden text-slate-200 focus:outline-none hover:text-indigo-400">
-                    <i data-lucide="menu" class="w-5 h-5"></i>
-                </button>
-            </div>
-        </nav>
+    <!-- Status badge (top-right on desktop) -->
+    <div class="hero-status">
+      <div class="status-badge">
+        <span class="status-dot"></span>
+        <span data-t="openToWork">Aberto a oportunidades</span>
+      </div>
+      <div class="status-badge">
+        <i data-lucide="map-pin" style="width:12px;height:12px;"></i>
+        <span data-t="location">Louveira, SP</span>
+      </div>
     </div>
 
-    <!-- Mobile Menu -->
-    <div id="mobile-menu" class="hidden fixed inset-0 z-40 bg-slate-950/95 backdrop-blur-sm pt-24 px-6 transition-opacity duration-300">
-        <div class="flex flex-col space-y-6 text-center text-xl font-medium">
-            <a href="#about" class="nav-link mobile-link hover:text-indigo-400" data-translate="aboutTitle">Sobre</a>
-            <a href="#experience" class="nav-link mobile-link hover:text-indigo-400" data-translate="navExperience">Experiência</a>
-            <a href="#projects" class="nav-link mobile-link hover:text-indigo-400" data-translate="navProjects">Projetos</a>
-            <a href="#skills" class="nav-link mobile-link hover:text-indigo-400" data-translate="navSkills">Stack</a>
-            <a href="#contact" class="nav-link mobile-link text-indigo-400 font-bold" data-translate="navContact">Contato</a>
-        </div>
-        <button id="close-menu" class="absolute top-8 right-8 text-slate-400">
-            <i data-lucide="x" class="w-8 h-8"></i>
-        </button>
+    <div class="hero-eyebrow" data-t="heroGreeting">Olá, eu sou</div>
+
+    <h1 class="hero-name">
+      Richard<br>
+      <span class="accent">Silva</span><span style="color:var(--accent)">.</span>
+    </h1>
+
+    <p class="hero-role">
+      <span id="hero-roles">Desenvolvedor Full-Stack</span><span class="typewriter-cursor"></span><br>
+      <span style="display:block;margin-top:12px;" data-t="heroBio" data-html="true">
+        Construo soluções digitais escaláveis com foco em <strong>performance</strong> e <strong>experiência do usuário</strong>. Full-Stack com atuação em front, back e infraestrutura.
+      </span>
+    </p>
+
+    <div class="hero-ctas">
+      <a href="#projects" class="btn-primary">
+        Ver Projetos <i data-lucide="arrow-right" style="width:16px;height:16px;"></i>
+      </a>
+      <a href="#contact" class="btn-ghost">
+        Entrar em contato
+      </a>
     </div>
 
-    <!-- Hero Section -->
-    <section class="relative pt-32 pb-20 md:pt-40 md:pb-32 px-6 z-10 flex items-center min-h-screen">
-        <div class="container mx-auto grid md:grid-cols-2 gap-12 items-center max-w-6xl">
-            
-            <!-- Texto -->
-            <div class="text-center md:text-left animate-fade-in-up">
-                <span class="block text-xl md:text-2xl text-slate-400 mb-2 font-medium tracking-tight" data-translate="heroGreeting">
-                    Olá, sou
-                </span>
-                
-                <h1 class="text-6xl md:text-8xl lg:text-9xl font-extrabold tracking-tighter mb-6 leading-none bg-gradient-to-r from-indigo-400 via-purple-400 to-cyan-400 bg-clip-text text-transparent">
-                    Mockqv.
-                </h1>
-                
-                <p class="text-lg md:text-xl text-slate-400 max-w-xl leading-relaxed md:mx-0 mx-auto mb-8" data-translate="heroSubtitle">
-                    Crio soluções digitais escaláveis com foco em performance e experiência do usuário.
-                </p>
+    <div class="hero-scroll-hint">
+      <span>scroll</span>
+    </div>
+  </section>
 
-                <div class="flex flex-wrap gap-4 justify-center md:justify-start">
-                    <a href="#projects" class="px-6 py-3 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg font-medium transition-all shadow-lg shadow-indigo-500/20 flex items-center gap-2 group">
-                        <span data-translate="btnProjects">Ver Projetos</span>
-                        <i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition-transform"></i>
-                    </a>
-                    <a href="#contact" class="px-6 py-3 bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 rounded-lg font-medium transition-all flex items-center gap-2">
-                        <span data-translate="navContact">Contato</span>
-                    </a>
-                </div>
-            </div>
+  <div class="glow-line z-content"></div>
 
-            <!-- Caixa de Código JSON -->
-            <div class="relative hidden md:block group animate-fade-in-up" style="animation-delay: 0.2s;">
-                <div class="absolute inset-0 bg-gradient-to-r from-indigo-500 to-cyan-500 rounded-2xl blur opacity-20 group-hover:opacity-30 transition-opacity duration-500 animate-float"></div>
-                
-                <div class="relative bg-slate-900/90 backdrop-blur-xl border border-slate-800 rounded-2xl p-6 shadow-2xl animate-float">
-                    <div class="flex items-center gap-2 mb-4 border-b border-slate-800/80 pb-4">
-                        <div class="w-3 h-3 rounded-full bg-red-500"></div>
-                        <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
-                        <div class="w-3 h-3 rounded-full bg-green-500"></div>
-                        <span class="ml-auto text-xs text-slate-500 font-mono flex items-center gap-1">
-                            <i data-lucide="file-json" class="w-3 h-3"></i> profile.json
-                        </span>
-                    </div>
-                    
-                    <pre class="font-mono text-sm leading-relaxed overflow-x-auto text-slate-300"><code><span class="text-purple-400">const</span> <span class="text-yellow-200">mockqv</span> = <span class="text-purple-400">{</span>
-  name: <span class="text-green-400">'Mockqv'</span>,
-  role: <span class="text-green-400">'Full Stack Dev'</span>,
-  location: <span class="text-green-400">'Louveira, SP'</span>,
-  status: <span class="text-green-400">'Open to Work'</span>,
-  
-  <span class="text-slate-500">// Core Stack</span>
-  skills: [
-    <span class="text-green-400">'React'</span>, 
-    <span class="text-green-400">'Node.js'</span>, 
-    <span class="text-green-400">'Python'</span>, 
-    <span class="text-green-400">'PostgreSQL'</span>
-  ],
+  <!-- ═════════════════════════════════ ABOUT ══ -->
+  <section id="about" class="z-content">
+    <div class="section-container">
+      <div class="about-grid" style="padding: 120px 0;">
 
-  <span class="text-blue-400">code</span>: <span class="text-purple-400">()</span> => <span class="text-purple-400">{</span>
-    <span class="text-cyan-400">return</span> <span class="text-green-400">"Building the future..."</span>;
-  <span class="text-purple-400">}</span>
-<span class="text-purple-400">}</span>;</code></pre>
-                </div>
-            </div>
-            
+        <!-- Photo -->
+        <div class="about-photo-wrap reveal">
+          <div class="about-photo-border">
+            <img src="assets/me.jpg" alt="Richard Silva" />
+            <div class="about-tag">Full-Stack Dev</div>
+          </div>
         </div>
-        
-        <div class="absolute bottom-10 left-1/2 -translate-x-1/2 animate-bounce hidden md:block text-slate-500">
-            <i data-lucide="chevrons-down" class="w-6 h-6"></i>
-        </div>
-    </section>
 
-    <!-- About Me -->
-    <section id="about" class="py-24 container mx-auto px-6 z-10 relative border-y border-slate-800/30">
-        <div class="max-w-6xl mx-auto grid md:grid-cols-2 gap-12 items-center">
-            <div class="max-w-md mx-auto md:mx-0 flex justify-center">
-                <div class="w-64 h-64 md:w-80 md:h-80 bg-slate-900 rounded-full flex items-center justify-center border-2 border-slate-800 relative">
-                    <div class="absolute inset-0 rounded-full border border-indigo-500/20 animate-[spin_10s_linear_infinite]"></div>
-                    <img src="assets/me.jpg" alt="Minha foto de perfil" class="rounded-full object-cover w-full h-full p-2">
-                </div>
+        <!-- Text -->
+        <div>
+          <div class="section-label reveal"><span data-t="aboutLabel">SOBRE MIM</span></div>
+          <h2 class="section-title reveal reveal-delay-1" data-t="aboutTitle" data-html="true">
+            Desenvolvedor <span class="dim">movido a</span> café e código
+          </h2>
+
+          <p class="about-text reveal reveal-delay-2" style="margin-top:28px;" data-t="aboutText" data-html="true">
+            Atuo como <strong>desenvolvedor full-stack</strong> com base sólida construída em formação técnica de excelência em Campinas. Expertise em Algoritmos, Estrutura de Dados, Engenharia de Software e Arquitetura Orientada a Serviços. Em constante evolução cursando Bacharelado em Sistemas de Informação.
+          </p>
+
+          <div class="about-stats reveal reveal-delay-2">
+            <div class="stat-item">
+              <div class="stat-num">2<span>+</span></div>
+              <div class="stat-label" data-t="statYearsLbl">de experiência</div>
             </div>
-            <div>
-                <h2 class="text-3xl font-bold mb-10 flex items-center text-slate-100">
-                    <i data-lucide="terminal" class="mr-3 text-indigo-500"></i>
-                    <span data-translate="aboutTitle">Sobre Mim</span>
-                </h2>
-                <div class="bg-slate-900/60 backdrop-blur-sm p-10 rounded-2xl border border-slate-800/50 relative overflow-hidden shadow-lg">
-                    <span class="absolute top-4 right-6 text-9xl text-indigo-500/5 font-serif pointer-events-none">”</span>
-
-                    <h3 class="text-xl font-bold text-slate-100 mb-6 relative z-10" data-translate="aboutSubtitle">Resumo Profissional</h3>
-                    <div class="text-slate-300 leading-relaxed text-lg space-y-4 relative z-10" data-translate="aboutText">
-                        <p>Atualmente atuo como <strong>desenvolvedor full-stack freelancer</strong>, aplicando uma base sólida construída em formação técnica de excelência em Campinas. Possuo expertise em Algoritmos, Estrutura de Dados, Engenharia de Software e Arquitetura Orientada a Serviços. Estou em constante evolução acadêmica, cursando Bacharelado em Sistemas de Informação.</p>
-                    </div>
-
-                    <div class="mt-8 pt-6 border-t border-slate-800/50 relative z-10">
-                        <a href="assets/CV - RICHARD SILVA.pdf" download class="flex items-center gap-2 w-fit bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-3 rounded-lg font-medium transition-all shadow-lg shadow-indigo-500/20 group">
-                            <i data-lucide="download" class="w-5 h-5 group-hover:-translate-y-1 transition-transform"></i>
-                            <span data-translate="btnDownload">Baixar Currículo</span>
-                        </a>
-                    </div>
-                </div>
+            <div class="stat-item">
+              <div class="stat-num">8<span>+</span></div>
+              <div class="stat-label" data-t="statProjsLbl">projetos entregues</div>
             </div>
-        </div>
-    </section>
-
-    <!-- Professional Experience -->
-    <section id="experience" class="py-24 container mx-auto px-6 z-10 relative">
-        <h2 class="text-3xl font-bold mb-16 flex items-center justify-center text-slate-100">
-            <i data-lucide="globe" class="mr-3 text-indigo-500"></i>
-            <span data-translate="experienceTitle">Jornada Profissional</span>
-        </h2>
-        
-        <div class="relative max-w-4xl mx-auto timeline-line">
-            
-            <!-- Job 1 -->
-            <div class="mb-12 md:mb-0 md:w-1/2 md:ml-auto pl-8 md:pl-12 relative">
-                <div class="absolute left-0 md:-left-2 top-2 w-4 h-4 bg-slate-950 border-2 border-indigo-500 rounded-full shadow-[0_0_10px_rgba(99,102,241,0.5)] z-10"></div>
-                <div class="bg-slate-900/60 backdrop-blur-sm p-6 rounded-2xl border border-slate-800/50 hover:border-indigo-500/50 transition-all hover:-translate-y-1 shadow-lg">
-                    <div class="flex justify-between items-center mb-2">
-                        <h3 class="text-xl font-bold text-slate-100" data-translate="job1Title">Desenvolvedor Full-Stack</h3>
-                        <span class="text-xs font-bold uppercase tracking-wider text-indigo-400 bg-indigo-500/10 px-2 py-1 rounded">Freelance</span>
-                    </div>
-                    <div class="text-indigo-300 font-mono text-sm mb-4" data-translate="job1Duration">Maio 2025 - Presente</div>
-                    <p class="text-slate-400 text-sm leading-relaxed" data-translate="job1Desc">
-                        Desenvolvimento de plataforma web para gestão de propriedades e CRM, implementando dashboards administrativos e integração com APIs externas. Stack: React, Flask, PostgreSQL.
-                    </p>
-                </div>
+            <div class="stat-item">
+              <div class="stat-num">12<span>+</span></div>
+              <div class="stat-label" data-t="statTechsLbl">tecnologias</div>
             </div>
+          </div>
 
-            <!-- Job 2 -->
-            <div class="mb-12 md:mb-0 md:w-1/2 md:mr-auto pl-8 md:pl-0 md:pr-12 relative md:text-right">
-                <div class="absolute left-0 md:left-auto md:-right-2 top-2 w-4 h-4 bg-slate-950 border-2 border-indigo-500 rounded-full z-10"></div>
-                <div class="bg-slate-900/60 backdrop-blur-sm p-6 rounded-2xl border border-slate-800/50 hover:border-indigo-500/50 transition-all hover:-translate-y-1 shadow-lg">
-                    <div class="flex justify-between items-center mb-2 md:flex-row-reverse">
-                        <h3 class="text-xl font-bold text-slate-100" data-translate="job2Title">Desenvolvedor Front-end</h3>
-                        <span class="text-xs font-bold uppercase tracking-wider text-indigo-400 bg-indigo-500/10 px-2 py-1 rounded">Freelance</span>
-                    </div>
-                    <div class="text-indigo-300 font-mono text-sm mb-4" data-translate="job2Duration">Setembro 2025</div>
-                    <p class="text-slate-400 text-sm leading-relaxed" data-translate="job2Desc">
-                        Arquitetura e desenvolvimento de interface responsiva de alta performance focada em SEO e acessibilidade para Portfólio Profissional. Stack: HTML5, Tailwind, JS.
-                    </p>
-                </div>
-            </div>
-
-        </div>
-    </section>
-
-    <!-- Personal Projects -->
-    <section id="projects" class="py-20 container mx-auto px-6 z-10 relative border-y border-slate-800/30">
-        <div class="flex flex-col md:flex-row justify-between items-end mb-12 gap-4 max-w-6xl mx-auto">
-            <div>
-                <h2 class="text-3xl font-bold flex items-center mb-2 text-slate-100">
-                    <i data-lucide="code" class="mr-3 text-indigo-500"></i>
-                    <span data-translate="projectsTitle">Projetos Pessoais</span>
-                </h2>
-                <p class="text-slate-400" data-translate="projectsSubtitle">Uma seleção dos meus melhores trabalhos.</p>
-            </div>
-            <a href="https://github.com/mockqv" target="_blank" class="flex items-center text-indigo-400 hover:text-indigo-300 font-medium transition-colors group">
-                <span data-translate="viewGithub">Ver todos no GitHub</span> <i data-lucide="external-link" class="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform"></i>
+          <div class="reveal reveal-delay-3">
+            <a href="assets/CV_RICHARD_SILVA.pdf" download class="btn-primary" style="width:fit-content;">
+              <i data-lucide="download" style="width:16px;height:16px;"></i>
+              <span data-t="downloadCV">Baixar Currículo</span>
             </a>
+          </div>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
-            
-            <!-- Project 1 -->
-            <div class="group bg-slate-900/60 backdrop-blur-sm rounded-2xl overflow-hidden border border-slate-800/50 hover:border-indigo-500/50 transition-all hover:-translate-y-2 hover:shadow-2xl hover:shadow-indigo-500/10 flex flex-col h-full min-h-[420px]">
-                <div class="relative overflow-hidden h-48 shrink-0 bg-[#5865F2] flex items-center justify-center group-hover:scale-105 transition-transform duration-500">
-                    <i class="devicon-discordjs-plain text-white text-7xl"></i>
-                </div>
-                
-                <div class="p-6 flex flex-col flex-grow">
-                    <div class="flex justify-between items-start mb-4">
-                        <h3 class="text-xl font-bold text-slate-100" data-translate="p1Title">TypeScript Bot Discord</h3>
-                        <a href="https://github.com/mockqv/TypeScript-Bot-Discord" target="_blank" class="text-slate-400 hover:text-white transition-colors"><i class="devicon-github-original text-2xl"></i></a>
-                    </div>
-                    <p class="text-slate-400 mb-6 text-sm leading-relaxed flex-grow" data-translate="p1Desc">Automação robusta para comunidades com arquitetura OOP modular e escalável.</p>
-                    
-                    <div class="flex flex-wrap gap-2 pt-4 border-t border-slate-800/50 mt-auto">
-                        <span class="tech-tag">TypeScript</span>
-                        <span class="tech-tag">Discord.js</span>
-                        <span class="tech-tag">MongoDB</span>
-                    </div>
-                </div>
-            </div>
+      </div>
+    </div>
+  </section>
 
-            <!-- Project 2 -->
-            <div class="group bg-slate-900/60 backdrop-blur-sm rounded-2xl overflow-hidden border border-slate-800/50 hover:border-indigo-500/50 transition-all hover:-translate-y-2 hover:shadow-2xl hover:shadow-indigo-500/10 flex flex-col h-full min-h-[420px]">
-                <div class="relative overflow-hidden h-48 shrink-0 bg-emerald-600 flex items-center justify-center group-hover:scale-105 transition-transform duration-500">
-                    <i data-lucide="link" class="text-white w-20 h-20"></i>
-                </div>
-                
-                <div class="p-6 flex flex-col flex-grow">
-                    <div class="flex justify-between items-start mb-4">
-                        <h3 class="text-xl font-bold text-slate-100" data-translate="p2Title">LinkSnap</h3>
-                        <a href="https://github.com/mockqv/LinkSnap" target="_blank" class="text-slate-400 hover:text-white transition-colors"><i class="devicon-github-original text-2xl"></i></a>
-                    </div>
-                    <p class="text-slate-400 mb-6 text-sm leading-relaxed flex-grow" data-translate="p2Desc">Encurtador de URLs minimalista focado em velocidade e UX simplificada.</p>
-                    
-                    <div class="flex flex-wrap gap-2 pt-4 border-t border-slate-800/50 mt-auto">
-                        <span class="tech-tag">Node.js</span>
-                        <span class="tech-tag">Express</span>
-                        <span class="tech-tag">MongoDB</span>
-                    </div>
-                </div>
-            </div>
+  <div class="glow-line z-content"></div>
 
-            <!-- Project 3 -->
-            <div class="group bg-slate-900/60 backdrop-blur-sm rounded-2xl overflow-hidden border border-slate-800/50 hover:border-indigo-500/50 transition-all hover:-translate-y-2 hover:shadow-2xl hover:shadow-indigo-500/10 flex flex-col h-full min-h-[420px]">
-                <div class="relative overflow-hidden h-48 shrink-0 bg-[#F1502F] flex items-center justify-center group-hover:scale-105 transition-transform duration-500">
-                    <i class="devicon-git-plain text-white text-7xl"></i>
-                </div>
-                
-                <div class="p-6 flex flex-col flex-grow">
-                    <div class="flex justify-between items-start mb-4">
-                        <h3 class="text-xl font-bold text-slate-100" data-translate="p3Title">MSC - Semantic Commit</h3>
-                        <a href="https://github.com/mockqv/msc" target="_blank" class="text-slate-400 hover:text-white transition-colors"><i class="devicon-github-original text-2xl"></i></a>
-                    </div>
-                    <p class="text-slate-400 mb-6 text-sm leading-relaxed flex-grow" data-translate="p3Desc">CLI Tool para padronização de commits semânticos, melhorando o fluxo de git.</p>
-                    
-                    <div class="flex flex-wrap gap-2 pt-4 border-t border-slate-800/50 mt-auto">
-                        <span class="tech-tag">Python</span>
-                        <span class="tech-tag">Shell</span>
-                        <span class="tech-tag">CLI</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Tech Stack -->
-    <section id="skills" class="py-20 container mx-auto px-6 z-10 relative">
-        <h2 class="text-3xl font-bold mb-12 flex items-center text-slate-100">
-            <i data-lucide="cpu" class="mr-3 text-indigo-500"></i>
-            <span data-translate="skillsTitle">Stack Tecnológica</span>
+  <!-- ══════════════════════════ EXPERIENCE ══ -->
+  <section id="experience" class="z-content">
+    <div class="section-container">
+      <div style="padding-top:120px;">
+        <div class="section-label reveal"><span data-t="expLabel">EXPERIÊNCIA</span></div>
+        <h2 class="section-title reveal reveal-delay-1" data-t="expTitle" data-html="true">
+          Jornada <span class="dim">profissional</span>
         </h2>
-        
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <!-- Frontend -->
-            <div class="bg-slate-900/60 backdrop-blur-sm p-6 rounded-2xl border border-slate-800/50 hover:border-indigo-500/30 transition-colors shadow-lg">
-                <h3 class="text-lg font-bold mb-6 text-indigo-400 flex items-center">
-                    <i data-lucide="layout" class="mr-2 w-5 h-5"></i> Frontend
-                </h3>
-                <div class="flex flex-wrap gap-3">
-                    <span class="skill-badge"><i class="devicon-javascript-plain colored devicon-icon"></i>JavaScript</span>
-                    <span class="skill-badge"><i class="devicon-css3-plain colored devicon-icon"></i>CSS3</span>
-                    <span class="skill-badge"><i class="devicon-react-original colored devicon-icon"></i>React</span>
-                    <span class="skill-badge"><i class="devicon-nextjs-plain text-slate-200 devicon-icon"></i>Next.js</span>
-                    <span class="skill-badge"><i class="devicon-typescript-plain colored devicon-icon"></i>TypeScript</span>
-                    <span class="skill-badge"><i class="devicon-tailwindcss-plain colored devicon-icon"></i>Tailwind</span>
-                    <span class="skill-badge"><i class="devicon-html5-plain colored devicon-icon"></i>HTML5</span>
-                </div>
+      </div>
+
+      <div class="experience-grid">
+        <!-- Tabs -->
+        <nav class="experience-nav reveal">
+          <button class="exp-tab active" data-tab="evolucional" data-t="tab1">Evolucional</button>
+          <button class="exp-tab"        data-tab="fs"          data-t="tab2">Freelancer FS</button>
+          <button class="exp-tab"        data-tab="fe"          data-t="tab3">Freelancer FE</button>
+        </nav>
+
+        <!-- Panels -->
+        <div class="exp-panels reveal reveal-delay-2">
+
+          <!-- Evolucional -->
+          <div class="exp-panel active" data-panel="evolucional">
+            <div class="exp-role">Desenvolvedor Full-Stack</div>
+            <div class="exp-company">Evolucional</div>
+            <div class="exp-meta">
+              <span>Abr 2026 — Presente</span>
+              <span class="exp-badge">Híbrido · Estágio</span>
             </div>
-            <!-- Backend -->
-            <div class="bg-slate-900/60 backdrop-blur-sm p-6 rounded-2xl border border-slate-800/50 hover:border-indigo-500/30 transition-colors shadow-lg">
-                <h3 class="text-lg font-bold mb-6 text-indigo-400 flex items-center">
-                    <i data-lucide="database" class="mr-2 w-5 h-5"></i> Backend & DB
-                </h3>
-                <div class="flex flex-wrap gap-3">
-                    <span class="skill-badge"><i class="devicon-nodejs-plain colored devicon-icon"></i>Node.js</span>
-                    <span class="skill-badge"><i class="devicon-python-plain colored devicon-icon"></i>Python</span>
-                    <span class="skill-badge"><i class="devicon-postgresql-plain colored devicon-icon"></i>PostgreSQL</span>
-                    <span class="skill-badge"><i class="devicon-mongodb-plain colored devicon-icon"></i>MongoDB</span>
-                    <span class="skill-badge"><i class="devicon-firebase-plain colored devicon-icon"></i>Firebase</span>
-                    <span class="skill-badge"><i class="devicon-supabase-plain colored devicon-icon"></i>Supabase</span>
-                </div>
+            <p class="exp-desc">
+              Atuação no desenvolvimento e manutenção das plataformas da empresa, trabalhando tanto no front-end quanto no back-end. Responsável por implementação de novas features, correção de bugs e gerenciamento de infraestrutura — incluindo processos de deploy, configuração de ambientes e integração de serviços em nuvem.
+            </p>
+            <div class="exp-tags">
+              <span class="exp-tag">Full-Stack</span>
+              <span class="exp-tag">Deploy</span>
+              <span class="exp-tag">Infraestrutura</span>
+              <span class="exp-tag">Cloud</span>
             </div>
-            <!-- Tools -->
-            <div class="bg-slate-900/60 backdrop-blur-sm p-6 rounded-2xl border border-slate-800/50 hover:border-indigo-500/30 transition-colors shadow-lg">
-                <h3 class="text-lg font-bold mb-6 text-indigo-400 flex items-center">
-                    <i data-lucide="server" class="mr-2 w-5 h-5"></i> DevOps & Tools
-                </h3>
-                <div class="flex flex-wrap gap-3">
-                    <span class="skill-badge"><i class="devicon-docker-plain colored devicon-icon"></i>Docker</span>
-                    <span class="skill-badge"><i class="devicon-git-plain colored devicon-icon"></i>Git</span>
-                    <span class="skill-badge"><i class="devicon-linux-plain text-slate-200 devicon-icon"></i>Linux</span>
-                    <span class="skill-badge"><i class="devicon-figma-plain colored devicon-icon"></i>Figma</span>
-                    <span class="skill-badge"><i class="devicon-bash-plain text-slate-200 devicon-icon"></i>Bash</span>
-                </div>
+          </div>
+
+          <!-- Freelancer Full-Stack -->
+          <div class="exp-panel" data-panel="fs">
+            <div class="exp-role">Desenvolvedor Full-Stack</div>
+            <div class="exp-company">Freelancer</div>
+            <div class="exp-meta">
+              <span>Mai 2025 — Presente</span>
+              <span class="exp-badge">Remoto · Freelance</span>
             </div>
+            <p class="exp-desc">
+              Desenvolvimento de plataforma web para gestão de propriedades e CRM, implementando dashboards administrativos e integração com APIs externas. Responsável por toda a arquitetura do sistema, desde o banco de dados até a interface do usuário.
+            </p>
+            <div class="exp-tags">
+              <span class="exp-tag">React</span>
+              <span class="exp-tag">Flask</span>
+              <span class="exp-tag">PostgreSQL</span>
+              <span class="exp-tag">API REST</span>
+            </div>
+          </div>
+
+          <!-- Freelancer Front-end -->
+          <div class="exp-panel" data-panel="fe">
+            <div class="exp-role">Desenvolvedor Front-end</div>
+            <div class="exp-company">Freelancer</div>
+            <div class="exp-meta">
+              <span>Set 2025</span>
+              <span class="exp-badge">Remoto · Freelance</span>
+            </div>
+            <p class="exp-desc">
+              Arquitetura e desenvolvimento de interface responsiva de alta performance com foco em SEO e acessibilidade para portfólio profissional. Entrega com otimizações de Core Web Vitals e suporte a múltiplos idiomas.
+            </p>
+            <div class="exp-tags">
+              <span class="exp-tag">HTML5</span>
+              <span class="exp-tag">Tailwind CSS</span>
+              <span class="exp-tag">JavaScript</span>
+              <span class="exp-tag">SEO</span>
+            </div>
+          </div>
+
         </div>
-    </section>
+      </div>
+    </div>
+  </section>
 
-    <!-- Contact Section -->
-    <section id="contact" class="py-24 container mx-auto px-6 z-10 relative border-t border-slate-800/30">
-        <div class="max-w-5xl mx-auto">
-            <div class="grid md:grid-cols-2 gap-12 items-center">
-                
-                <!-- Infos -->
-                <div class="sticky top-24">
-                    <h2 class="text-4xl font-bold mb-6 text-slate-100">
-                        <span data-translate="contactTitle">Vamos construir algo</span> <span class="text-indigo-500" data-translate="contactAmazing">incrível</span> <span data-translate="contactTogether">juntos?</span>
-                    </h2>
-                    <p class="text-slate-400 mb-8 text-lg leading-relaxed" data-translate="contactText">
-                        Estou disponível para novos projetos e oportunidades. Se você precisa de uma solução robusta, me mande uma mensagem.
-                    </p>
-                    
-                    <div class="space-y-6">
-                        <a href="mailto:richardviniciusfs07@gmail.com" class="flex items-center p-4 bg-slate-900/60 backdrop-blur-sm rounded-xl border border-slate-800/50 hover:border-indigo-500/50 transition-colors group">
-                            <div class="p-3 bg-indigo-500/10 rounded-lg text-indigo-400 group-hover:bg-indigo-500 group-hover:text-white transition-colors">
-                                <i data-lucide="mail" class="w-6 h-6"></i>
-                            </div>
-                            <div class="ml-4">
-                                <p class="text-sm text-slate-500 font-medium">Email</p>
-                                <p class="text-slate-200 font-semibold">richardviniciusfs07@gmail.com</p>
-                            </div>
-                        </a>
+  <div class="glow-line z-content"></div>
 
-                        <a href="https://www.linkedin.com/in/richardvfsilva/" target="_blank" class="flex items-center p-4 bg-slate-900/60 backdrop-blur-sm rounded-xl border border-slate-800/50 hover:border-indigo-500/50 transition-colors group">
-                            <div class="p-3 bg-blue-500/10 rounded-lg text-blue-500 group-hover:bg-blue-600 group-hover:text-white transition-colors">
-                                <i data-lucide="linkedin" class="w-6 h-6"></i>
-                            </div>
-                            <div class="ml-4">
-                                <p class="text-sm text-slate-500 font-medium">LinkedIn</p>
-                                <p class="text-slate-200 font-semibold">richardvfsilva</p>
-                            </div>
-                        </a>
-                        
-                        <a href="https://github.com/mockqv" target="_blank" class="flex items-center p-4 bg-slate-900/60 backdrop-blur-sm rounded-xl border border-slate-800/50 hover:border-indigo-500/50 transition-colors group">
-                            <div class="p-3 bg-slate-700/50 rounded-lg text-white group-hover:bg-slate-600 transition-colors">
-                                <i data-lucide="github" class="w-6 h-6"></i>
-                            </div>
-                            <div class="ml-4">
-                                <p class="text-sm text-slate-500 font-medium">GitHub</p>
-                                <p class="text-slate-200 font-semibold">mockqv</p>
-                            </div>
-                        </a>
+  <!-- ═══════════════════════════ PROJECTS ══ -->
+  <section id="projects" class="z-content">
+    <div class="section-container" style="padding-top:120px;padding-bottom:120px;">
 
-                        <!-- Location -->
-                        <div class="flex items-center p-4 border border-transparent text-slate-400">
-                            <i data-lucide="map-pin" class="mr-3 w-5 h-5 text-indigo-500"></i>
-                            <span class="font-medium mr-3">Louveira, SP</span>
-                            <span class="bg-emerald-500/10 text-emerald-400 text-xs px-2 py-1 rounded border border-emerald-500/20 flex items-center">
-                                <span class="w-2 h-2 bg-emerald-500 rounded-full mr-2 animate-pulse"></span>
-                                <span data-translate="remoteAvailable">Disponível para Remoto</span>
-                            </span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Simulação de Form -->
-                <div class="max-w-md mx-auto md:mx-0">
-                    <div class="bg-slate-900/40 p-8 rounded-3xl border border-slate-800 flex flex-col items-center text-center">
-                        <div class="bg-indigo-500/10 p-6 rounded-full mb-6">
-                            <i data-lucide="send" class="w-12 h-12 text-indigo-500"></i>
-                        </div>
-                        <h3 class="text-white text-xl font-bold mb-2">Entre em contato</h3>
-                        <p class="text-slate-400 text-sm mb-6">Mande um email direto ou me chame no LinkedIn.</p>
-                    </div>
-                </div>
-            </div>
+      <div class="projects-header reveal">
+        <div>
+          <div class="section-label"><span data-t="projLabel">PROJETOS</span></div>
+          <h2 class="section-title" data-t="projTitle" data-html="true">
+            Trabalhos <span class="dim">selecionados</span>
+          </h2>
         </div>
-    </section>
+        <a href="https://github.com/mockqv" target="_blank" rel="noopener" class="btn-ghost" style="white-space:nowrap;">
+          <span data-t="viewGithub">Ver todos no GitHub</span>
+          <i data-lucide="external-link" style="width:14px;height:14px;"></i>
+        </a>
+      </div>
 
-    <!-- Footer -->
-    <footer class="py-8 bg-slate-950 border-t border-slate-900 text-center text-slate-500 text-sm z-10 relative">
-        <p>&copy; 2025 Mockqv.</p>
-    </footer>
+      <div class="projects-grid">
 
-    <!-- Script Principal -->
-    <script src="js/script.js"></script>
+        <!-- MyCash — DESTAQUE -->
+        <div class="project-card reveal" style="grid-column: span 2; display:grid; grid-template-columns:1fr 1fr; gap:0; padding:0; overflow:hidden;">
+          <div style="padding:40px; display:flex; flex-direction:column; justify-content:space-between;">
+            <div>
+              <div class="project-num">01 — DESTAQUE</div>
+              <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px;">
+                <div class="project-icon" style="background:rgba(16,185,129,0.1);border-color:rgba(16,185,129,0.2);">💰</div>
+              </div>
+              <div class="project-title">
+                MyCash
+                <a href="https://github.com/mockqv/MyCash" target="_blank" rel="noopener" title="GitHub">
+                  <i class="devicon-github-original" style="font-size:18px;"></i>
+                </a>
+              </div>
+              <p class="project-desc">
+                Sistema completo de gestão financeira pessoal com dashboard interativo, controle de receitas e despesas, relatórios e metas. Arquitetura full-stack moderna com TypeScript no front, C# no back e Supabase como banco de dados.
+              </p>
+            </div>
+            <div class="project-tech">
+              <span class="tech-chip">TypeScript</span>
+              <span class="tech-chip">C#</span>
+              <span class="tech-chip">PostgreSQL</span>
+              <span class="tech-chip">Supabase</span>
+              <span class="tech-chip">.NET</span>
+            </div>
+          </div>
+          <div style="background:linear-gradient(135deg,rgba(16,185,129,0.08) 0%,rgba(168,85,247,0.06) 100%); border-left:1px solid var(--border); display:flex; align-items:center; justify-content:center; min-height:280px;">
+            <div style="font-family:'JetBrains Mono',monospace;font-size:0.75rem;color:var(--text3);line-height:1.8;padding:32px;">
+              <span style="color:var(--accent);">const</span> <span style="color:#c9d1d9;">dashboard</span> = {<br>
+              &nbsp;&nbsp;<span style="color:var(--text2);">saldo:</span> <span style="color:#10b981;">R$ 12.450</span>,<br>
+              &nbsp;&nbsp;<span style="color:var(--text2);">receitas:</span> <span style="color:#10b981;">↑ 18%</span>,<br>
+              &nbsp;&nbsp;<span style="color:var(--text2);">despesas:</span> <span style="color:#ef4444;">↓ 7%</span>,<br>
+              &nbsp;&nbsp;<span style="color:var(--text2);">meta:</span> <span style="color:var(--accent3);">'economizar'</span><br>
+              }
+            </div>
+          </div>
+        </div>
+
+        <!-- TypeScript Bot Discord -->
+        <div class="project-card reveal reveal-delay-1">
+          <div class="project-num">02</div>
+          <div class="project-icon" style="background:rgba(88,101,242,0.1);border-color:rgba(88,101,242,0.2);">
+            <i class="devicon-discordjs-plain" style="color:#5865F2;font-size:1.4rem;"></i>
+          </div>
+          <div class="project-title">
+            TypeScript Bot Discord
+            <a href="https://github.com/mockqv/TypeScript-Bot-Discord" target="_blank" rel="noopener">
+              <i class="devicon-github-original" style="font-size:18px;"></i>
+            </a>
+          </div>
+          <p class="project-desc">
+            Automação robusta para comunidades Discord com arquitetura OOP modular e escalável. Sistema de comandos extensível, gestão de permissões e persistência de dados.
+          </p>
+          <div class="project-tech">
+            <span class="tech-chip">TypeScript</span>
+            <span class="tech-chip">Discord.js</span>
+            <span class="tech-chip">MongoDB</span>
+          </div>
+        </div>
+
+        <!-- LinkSnap -->
+        <div class="project-card reveal reveal-delay-2">
+          <div class="project-num">03</div>
+          <div class="project-icon" style="background:rgba(16,185,129,0.1);border-color:rgba(16,185,129,0.2);">
+            <i data-lucide="link-2" style="color:#10b981;width:22px;height:22px;"></i>
+          </div>
+          <div class="project-title">
+            LinkSnap
+            <a href="https://github.com/mockqv/LinkSnap" target="_blank" rel="noopener">
+              <i class="devicon-github-original" style="font-size:18px;"></i>
+            </a>
+          </div>
+          <p class="project-desc">
+            Encurtador de URLs minimalista com foco em velocidade e UX simplificada. Rastreamento de cliques, QR Code automático e expiração configurável de links.
+          </p>
+          <div class="project-tech">
+            <span class="tech-chip">Node.js</span>
+            <span class="tech-chip">Express</span>
+            <span class="tech-chip">MongoDB</span>
+          </div>
+        </div>
+
+        <!-- MSC -->
+        <div class="project-card reveal reveal-delay-3">
+          <div class="project-num">04</div>
+          <div class="project-icon" style="background:rgba(241,80,47,0.1);border-color:rgba(241,80,47,0.2);">
+            <i class="devicon-git-plain" style="color:#F1502F;font-size:1.4rem;"></i>
+          </div>
+          <div class="project-title">
+            MSC — Semantic Commit
+            <a href="https://github.com/mockqv/msc" target="_blank" rel="noopener">
+              <i class="devicon-github-original" style="font-size:18px;"></i>
+            </a>
+          </div>
+          <p class="project-desc">
+            CLI Tool para padronização de commits semânticos que melhora o fluxo de trabalho em equipe. Suporte a Conventional Commits e integração com hooks do Git.
+          </p>
+          <div class="project-tech">
+            <span class="tech-chip">Python</span>
+            <span class="tech-chip">Shell</span>
+            <span class="tech-chip">CLI</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <div class="glow-line z-content"></div>
+
+  <!-- ════════════════════════════ SKILLS ══ -->
+  <section id="skills" class="z-content">
+    <div class="section-container">
+      <div style="padding-top:120px;">
+        <div class="section-label reveal"><span data-t="skillsLabel">STACK</span></div>
+        <h2 class="section-title reveal reveal-delay-1" data-t="skillsTitle" data-html="true">
+          Tecnologias <span class="dim">que uso</span>
+        </h2>
+      </div>
+
+      <div class="skills-grid" style="padding-bottom:120px;">
+
+        <!-- Frontend -->
+        <div class="skill-group reveal">
+          <div class="skill-group-label">Frontend</div>
+          <div class="skill-items">
+            <span class="skill-item"><i class="devicon-react-original colored"></i> React</span>
+            <span class="skill-item"><i class="devicon-nextjs-plain" style="color:#fff;"></i> Next.js</span>
+            <span class="skill-item"><i class="devicon-typescript-plain colored"></i> TypeScript</span>
+            <span class="skill-item"><i class="devicon-javascript-plain colored"></i> JavaScript</span>
+            <span class="skill-item"><i class="devicon-tailwindcss-plain colored"></i> Tailwind</span>
+            <span class="skill-item"><i class="devicon-html5-plain colored"></i> HTML5</span>
+            <span class="skill-item"><i class="devicon-css3-plain colored"></i> CSS3</span>
+          </div>
+        </div>
+
+        <!-- Backend & DB -->
+        <div class="skill-group reveal reveal-delay-1">
+          <div class="skill-group-label">Backend & DB</div>
+          <div class="skill-items">
+            <span class="skill-item"><i class="devicon-nodejs-plain colored"></i> Node.js</span>
+            <span class="skill-item"><i class="devicon-python-plain colored"></i> Python</span>
+            <span class="skill-item"><i class="devicon-csharp-plain colored"></i> C#</span>
+            <span class="skill-item"><i class="devicon-postgresql-plain colored"></i> PostgreSQL</span>
+            <span class="skill-item"><i class="devicon-mongodb-plain colored"></i> MongoDB</span>
+            <span class="skill-item"><i class="devicon-supabase-plain colored"></i> Supabase</span>
+            <span class="skill-item"><i class="devicon-firebase-plain colored"></i> Firebase</span>
+            <span class="skill-item"><i class="devicon-dotnetcore-plain colored"></i> .NET</span>
+            <span class="skill-item"><i class="devicon-microsoftsqlserver-plain colored"></i> SQL Server</span>
+          </div>
+        </div>
+
+        <!-- DevOps & Tools -->
+        <div class="skill-group reveal reveal-delay-2">
+          <div class="skill-group-label">DevOps & Tools</div>
+          <div class="skill-items">
+            <span class="skill-item"><i class="devicon-docker-plain colored"></i> Docker</span>
+            <span class="skill-item"><i class="devicon-git-plain colored"></i> Git</span>
+            <span class="skill-item"><i class="devicon-linux-plain" style="color:#fff;"></i> Linux</span>
+            <span class="skill-item"><i class="devicon-figma-plain colored"></i> Figma</span>
+            <span class="skill-item"><i class="devicon-bash-plain" style="color:#fff;"></i> Bash</span>
+            <span class="skill-item"><i class="devicon-github-original" style="color:#fff;"></i> GitHub</span>
+            <span class="skill-item"><i class="devicon-bitbucket-original colored"></i> Bitbucket</span>
+            <span class="skill-item"><i class="devicon-jira-plain colored"></i> Jira</span>
+            <span class="skill-item"><i class="devicon-slack-plain colored"></i> Slack</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <div class="glow-line z-content"></div>
+
+  <!-- ══════════════════════ GITHUB STATS ══ -->
+  <section id="github-stats" class="z-content">
+    <div class="section-container" style="padding-top:120px;padding-bottom:120px;">
+      <div style="display:flex; justify-content:space-between; align-items:flex-end; flex-wrap:wrap; gap:16px;">
+        <div>
+          <div class="section-label reveal"><span data-t="statsLabel">GITHUB</span></div>
+          <h2 class="section-title reveal reveal-delay-1" data-t="statsTitle" data-html="true">
+            Atividade <span class="dim">& contribuições</span>
+          </h2>
+        </div>
+        <div class="reveal reveal-delay-1">
+          <a href="https://github.com/mockqv" target="_blank" rel="noopener" class="btn-ghost" style="width:fit-content;">
+            <i class="devicon-github-original" style="font-size:16px;"></i>
+            <span>@mockqv</span>
+            <i data-lucide="external-link" style="width:14px;height:14px;"></i>
+          </a>
+        </div>
+      </div>
+
+      <!-- Quick Stat Numbers -->
+      <div class="reveal reveal-delay-2" style="margin-top:48px; display:grid; grid-template-columns:repeat(4,1fr); gap:2px;">
+        <div style="background:var(--bg2); border:1px solid var(--border); padding:28px 24px; text-align:center; transition:border-color .3s;" onmouseenter="this.style.borderColor='rgba(168,85,247,0.3)'" onmouseleave="this.style.borderColor='rgba(168,85,247,0.15)'">
+          <div style="font-size:2.2rem; font-weight:700; color:var(--white); letter-spacing:-0.04em; line-height:1;">30<span style="color:var(--accent);">+</span></div>
+          <div style="font-family:'JetBrains Mono',monospace; font-size:0.6rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--text3); margin-top:8px;">Repositórios</div>
+        </div>
+        <div style="background:var(--bg2); border:1px solid var(--border); padding:28px 24px; text-align:center; transition:border-color .3s;" onmouseenter="this.style.borderColor='rgba(168,85,247,0.3)'" onmouseleave="this.style.borderColor='rgba(168,85,247,0.15)'">
+          <div style="font-size:2.2rem; font-weight:700; color:var(--white); letter-spacing:-0.04em; line-height:1;">500<span style="color:var(--accent);">+</span></div>
+          <div style="font-family:'JetBrains Mono',monospace; font-size:0.6rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--text3); margin-top:8px;">Commits</div>
+        </div>
+        <div style="background:var(--bg2); border:1px solid var(--border); padding:28px 24px; text-align:center; transition:border-color .3s;" onmouseenter="this.style.borderColor='rgba(168,85,247,0.3)'" onmouseleave="this.style.borderColor='rgba(168,85,247,0.15)'">
+          <div style="font-size:2.2rem; font-weight:700; color:var(--white); letter-spacing:-0.04em; line-height:1;">8<span style="color:var(--accent);">+</span></div>
+          <div style="font-family:'JetBrains Mono',monospace; font-size:0.6rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--text3); margin-top:8px;">Linguagens</div>
+        </div>
+        <div style="background:var(--bg2); border:1px solid var(--border); padding:28px 24px; text-align:center; transition:border-color .3s;" onmouseenter="this.style.borderColor='rgba(168,85,247,0.3)'" onmouseleave="this.style.borderColor='rgba(168,85,247,0.15)'">
+          <div style="font-size:2.2rem; font-weight:700; color:var(--white); letter-spacing:-0.04em; line-height:1;">2<span style="color:var(--accent);">+</span></div>
+          <div style="font-family:'JetBrains Mono',monospace; font-size:0.6rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--text3); margin-top:8px;">Anos ativo</div>
+        </div>
+      </div>
+
+      <!-- Stats + Streak side-by-side -->
+      <div style="margin-top:20px; display:grid; grid-template-columns:1fr 1fr; gap:20px;" class="stats-grid">
+
+        <!-- Stats Card -->
+        <div class="reveal" style="background:var(--bg2); border:1px solid var(--border); border-radius:8px; overflow:hidden;">
+          <div style="padding:20px 24px 14px; border-bottom:1px solid var(--border); display:flex; align-items:center; gap:10px;">
+            <div style="width:8px; height:8px; border-radius:50%; background:var(--accent);"></div>
+            <span style="font-family:'JetBrains Mono',monospace; font-size:0.65rem; letter-spacing:0.15em; text-transform:uppercase; color:var(--text2);">Estatísticas gerais</span>
+          </div>
+          <div style="padding:4px; position:relative;">
+            <img
+              src="https://github-readme-stats.vercel.app/api?username=mockqv&show_icons=true&theme=transparent&title_color=a855f7&text_color=8888aa&icon_color=a855f7&border_color=0d0d14&bg_color=0d0d14&hide_border=true&rank_icon=github"
+              alt="GitHub Stats"
+              loading="lazy"
+              style="width:100%;height:auto;display:block;min-height:160px;"
+              onerror="this.style.display='none';this.nextElementSibling.style.display='block';"
+            />
+            <!-- Fallback when API fails -->
+            <div style="display:none; padding:28px 24px; font-family:'JetBrains Mono',monospace; font-size:0.75rem; line-height:2; color:var(--text2);">
+              <span style="color:var(--accent);">const</span> <span style="color:var(--white);">stats</span> = {<br>
+              &nbsp;&nbsp;<span style="color:var(--text3);">total_stars:</span> <span style="color:var(--accent3);">12</span>,<br>
+              &nbsp;&nbsp;<span style="color:var(--text3);">total_commits:</span> <span style="color:var(--accent3);">500+</span>,<br>
+              &nbsp;&nbsp;<span style="color:var(--text3);">total_prs:</span> <span style="color:var(--accent3);">15</span>,<br>
+              &nbsp;&nbsp;<span style="color:var(--text3);">total_repos:</span> <span style="color:var(--accent3);">30+</span>,<br>
+              &nbsp;&nbsp;<span style="color:var(--text3);">rank:</span> <span style="color:#10b981;">'A+'</span><br>
+              };<br>
+              <a href="https://github.com/mockqv" target="_blank" rel="noopener" style="color:var(--accent);text-decoration:none;margin-top:4px;display:inline-block;">Ver no GitHub →</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Streak Card -->
+        <div class="reveal reveal-delay-1" style="background:var(--bg2); border:1px solid var(--border); border-radius:8px; overflow:hidden;">
+          <div style="padding:20px 24px 14px; border-bottom:1px solid var(--border); display:flex; align-items:center; gap:10px;">
+            <div style="width:8px; height:8px; border-radius:50%; background:#10b981;"></div>
+            <span style="font-family:'JetBrains Mono',monospace; font-size:0.65rem; letter-spacing:0.15em; text-transform:uppercase; color:var(--text2);">Sequência de contribuições</span>
+          </div>
+          <div style="padding:4px;">
+            <img
+              src="https://streak-stats.demolab.com?user=mockqv&theme=transparent&hide_border=true&background=0d0d14&fire=a855f7&ring=a855f7&currStreakLabel=a855f7&sideLabels=8888aa&sideNums=c084fc&currStreakNum=c084fc&dates=555570"
+              alt="GitHub Streak"
+              loading="lazy"
+              style="width:100%;height:auto;display:block;"
+            / onerror="this.style.display='none'" >
+          </div>
+        </div>
+      </div>
+
+      <!-- Contribution Graph — full width -->
+      <div class="reveal reveal-delay-2" style="margin-top:20px; background:var(--bg2); border:1px solid var(--border); border-radius:8px; overflow:hidden;">
+        <div style="padding:20px 24px 14px; border-bottom:1px solid var(--border); display:flex; align-items:center; justify-content:space-between;">
+          <div style="display:flex; align-items:center; gap:10px;">
+            <div style="width:8px; height:8px; border-radius:50%; background:var(--accent3);"></div>
+            <span style="font-family:'JetBrains Mono',monospace; font-size:0.65rem; letter-spacing:0.15em; text-transform:uppercase; color:var(--text2);">Gráfico de contribuições</span>
+          </div>
+          <span style="font-family:'JetBrains Mono',monospace; font-size:0.6rem; color:var(--text3);">último ano</span>
+        </div>
+        <div style="padding:4px 4px 0;">
+          <img
+            src="https://github-readme-activity-graph.vercel.app/graph?username=mockqv&bg_color=0d0d14&color=a855f7&line=7c3aed&point=c084fc&area=true&area_color=a855f7&hide_border=true&radius=8"
+            alt="Contribution Graph"
+            loading="lazy"
+            style="width:100%;height:auto;display:block;"
+          / onerror="this.style.display='none'" >
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <div class="glow-line z-content"></div>
+
+  <!-- ═══════════════════════════ CONTACT ══ -->
+  <section id="contact" class="z-content">
+    <div class="section-container" style="padding-top:120px;padding-bottom:120px;">
+      <div class="contact-inner">
+
+        <!-- Left -->
+        <div>
+          <div class="section-label reveal"><span data-t="contactLabel">CONTATO</span></div>
+          <h2 class="contact-big-text reveal reveal-delay-1">
+            <span data-t="contactTitle1">Vamos construir</span><br>
+            <span data-t="contactTitle2" class="dim">algo</span><br>
+            <span data-t="contactTitle3" class="accent">incrível</span><br>
+            <span data-t="contactTitle4">juntos</span><span style="color:var(--accent)">.</span>
+          </h2>
+          <p class="contact-subtext reveal reveal-delay-2" data-t="contactSub">
+            Estou disponível para novos projetos e oportunidades. Me mande uma mensagem.
+          </p>
+
+          <div class="contact-links reveal reveal-delay-2">
+
+            <a href="/cdn-cgi/l/email-protection#f6849f959e978492809f989f959f83859085c6c1b6919b979f9ad895999b" class="contact-link">
+              <div class="contact-link-icon">
+                <i data-lucide="mail" style="width:18px;height:18px;color:var(--accent);"></i>
+              </div>
+              <div class="contact-link-info">
+                <div class="contact-link-label">Email</div>
+                <div class="contact-link-value"><span class="__cf_email__" data-cfemail="55273c363d342731233c3b3c363c202633266562153238343c397b363a38">[email&#160;protected]</span></div>
+              </div>
+              <i data-lucide="arrow-right" class="contact-link-arrow" style="width:18px;height:18px;"></i>
+            </a>
+
+            <a href="https://www.linkedin.com/in/richardvfsilva/" target="_blank" rel="noopener" class="contact-link">
+              <div class="contact-link-icon">
+                <i class="devicon-linkedin-plain colored" style="font-size:18px;"></i>
+              </div>
+              <div class="contact-link-info">
+                <div class="contact-link-label">LinkedIn</div>
+                <div class="contact-link-value">richardvfsilva</div>
+              </div>
+              <i data-lucide="arrow-right" class="contact-link-arrow" style="width:18px;height:18px;"></i>
+            </a>
+
+            <a href="https://github.com/mockqv" target="_blank" rel="noopener" class="contact-link">
+              <div class="contact-link-icon">
+                <i class="devicon-github-original" style="font-size:18px;color:var(--text);"></i>
+              </div>
+              <div class="contact-link-info">
+                <div class="contact-link-label">GitHub</div>
+                <div class="contact-link-value">mockqv</div>
+              </div>
+              <i data-lucide="arrow-right" class="contact-link-arrow" style="width:18px;height:18px;"></i>
+            </a>
+
+          </div>
+        </div>
+
+        <!-- Right -->
+        <div class="contact-right reveal reveal-delay-3">
+          <div class="contact-availability">
+            <div class="availability-status">
+              <div class="availability-dot"></div>
+              <span class="availability-label">Disponível</span>
+            </div>
+            <p class="availability-text" data-t="availableText">
+              Disponível para projetos freelance e novas oportunidades.
+            </p>
+            <div class="contact-location">
+              <i data-lucide="map-pin" style="width:14px;height:14px;"></i>
+              <span data-t="location">Louveira, SP</span>
+              <span style="color:var(--border2);margin:0 6px;">—</span>
+              <span>Remoto / Híbrido</span>
+            </div>
+          </div>
+
+          <!-- Code card -->
+          <div style="background:var(--bg);border:1px solid var(--border);border-radius:4px;overflow:hidden;">
+            <div style="display:flex;align-items:center;gap:6px;padding:12px 16px;border-bottom:1px solid var(--border);background:var(--bg2);">
+              <div style="width:10px;height:10px;border-radius:50%;background:#ef4444;"></div>
+              <div style="width:10px;height:10px;border-radius:50%;background:#f59e0b;"></div>
+              <div style="width:10px;height:10px;border-radius:50%;background:#10b981;"></div>
+              <span style="font-family:'JetBrains Mono',monospace;font-size:0.65rem;color:var(--text3);margin-left:auto;">contact.ts</span>
+            </div>
+            <pre style="font-family:'JetBrains Mono',monospace;font-size:0.75rem;line-height:1.8;color:var(--text2);padding:20px 24px;overflow-x:auto;"><code><span style="color:var(--accent);">const</span> <span style="color:#c9d1d9;">richard</span> = {
+  <span style="color:var(--text2);">nome:</span>    <span style="color:#c084fc;">'Richard Silva'</span>,
+  <span style="color:var(--text2);">cargo:</span>   <span style="color:#c084fc;">'Full-Stack Dev'</span>,
+  <span style="color:var(--text2);">empresa:</span> <span style="color:#c084fc;">'Evolucional'</span>,
+  <span style="color:var(--text2);">status:</span>  <span style="color:#10b981;">'disponível'</span>,
+  <span style="color:var(--text2);">email:</span>   <span style="color:#c084fc;">'richardviniciusfs07'</span>
+             <span style="color:#c084fc;">+ '@gmail.com'</span>,
+};</code></pre>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════ FOOTER ══ -->
+  <footer class="z-content">
+    <div class="footer-left" data-t="footerLeft">© 2026 Richard Silva.</div>
+    <div class="footer-right" data-t="footerRight">Louveira, SP — Brasil</div>
+  </footer>
+
+  <!-- Scripts -->
+  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="js/script.js"></script>
+
 </body>
 </html>
